@@ -9,7 +9,12 @@ class StaticList():
             return False
         
     def add(self,index,val):
-        if not self.isFull():
+        if not self.isFull() and index<self.length:
             self.list[index] = val
+
+    def delete(self,index):
+        if index<self.length:
+            self.list[index] = None
+            
 
 
