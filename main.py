@@ -1,17 +1,44 @@
-class Node:
-    def __init__(self,val):
-        self.val = val
-        self.next = None
+class StaticList:
+    #assumed same data type for each element in list
+    def __init__(self,length):#O(N)
+        self.length = length
+        self.list = [None]*length
+        self.current_count = 0
 
-#not sure about LinkedList class
-class LinkedList:
-    def __init__(self,node_val):
-        node = Node(node_val)
-        self.head = node
+    def isFull(self):#O(1)
+        if self.current_count<self.length:
+            return False
+        else:
+            return True
+        
+    def add(self,index,val):#O(1)
+        try:
+            if val is None:
+                raise ValueError("Cannot add None to list")
+            if not isinstance(index,int):
+                raise TypeError("Index should be integer only")
+            if not self.isFull() and 0<=index<self.length:
+                if self.list[index] is None:
+                    self.current_count+=1
+                self.list[index] = val
+        except ValueError as e:
+            print(e)
+        except TypeError as e:
+            print(e)
+        except Exception:
+            print("Something went wrong :/")
+        
+    def delete(self,index):#O(1)
+        try:
+            if not isinstance(index,int):
+                raise TypeError("Index should be integer only")
+            if 0<=index<self.length and self.list[index] is not None:
+                self.list[index] = None
+                self.current_count-=1
+        except TypeError as e:
+            print(e)
+        except Exception:
+            print("Something went wrong :/")
+            
 
-    def traverse(self):
-        current = self.head
-        while current is not None:
-            print(current.val)
-            current = current.next
-    
+
