@@ -40,5 +40,15 @@ class StaticList:
         except Exception:
             print("Something went wrong :/")
             
+if __name__=="__main__":
+    sl = StaticList(3)
+    sl.add(1,1)
+    sl.add(0,0)
+    sl.add(2,2)
 
+    print(sl.current_count) #3
+    print(sl.length) #3
+    print(sl.list) #[0, 1, 2]
+
+    sl.add(3,3) #did nothing
 
