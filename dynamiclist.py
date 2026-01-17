@@ -56,9 +56,9 @@ if __name__=="__main__":
     dl.append(5,5) #[0, 1, 2, 3, 4, 5, None, None, None, None]
     dl.delete(4) #[0, 1, 2, 3, None, 5, None, None, None, None]
     dl.append(9,9)
-    # print(dl.list.list)
-    # print(dl.pop())
+    print(dl.list.list)
+    print(dl.pop())
     print(dl.list.list)
     print(dl.atIndex(0))
-    #print(dl.find(67))
+    print(dl.find(67))
 
