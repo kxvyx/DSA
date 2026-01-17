@@ -17,6 +17,34 @@ class dynamicList:
 
     def delete(self,index):
         self.list.delete(index)
+    
+    def pop(self):
+        last_element = self.list.list[self.list.length-1]
+        self.list.delete(self.list.length-1)
+        return last_element
+
+    def atIndex(self,index):
+        try:
+            if index<0 or index>self.list.length:
+                raise IndexError("Index is out of range")
+            return self.list.list[index]
+        except IndexError as e:
+            print(e)
+        except Exception as e:
+            print("something went wrong", e) 
+
+    def sum(self):
+        sum=0
+        for element in self.list.list:
+            if element:
+                sum+=element
+        return sum
+    
+    def find(self,val):
+        for i in range(self.list.length):
+            if self.list.list[i]==val:
+                return i
+        return "Not found"
 
 if __name__=="__main__":
     dl = dynamicList()
@@ -27,7 +55,10 @@ if __name__=="__main__":
     dl.append(4,4) #[0, 1, 2, 3, 4]
     dl.append(5,5) #[0, 1, 2, 3, 4, 5, None, None, None, None]
     dl.delete(4) #[0, 1, 2, 3, None, 5, None, None, None, None]
-
+    dl.append(9,9)
+    # print(dl.list.list)
+    # print(dl.pop())
     print(dl.list.list)
-
+    print(dl.atIndex(0))
+    #print(dl.find(67))
 
