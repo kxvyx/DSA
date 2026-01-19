@@ -1,6 +1,8 @@
 #test cases
 from staticlist import StaticList
 from dynamiclist import dynamicList
+from doublylinkedlist import DoublyLinkedList
+from doublylinkedlist import DoublyNode
 if __name__ == "__main__":
     # # Initialize a list of length 3
     # sl = StaticList(3)
@@ -33,40 +35,78 @@ if __name__ == "__main__":
     # print(f"Final State: {sl.list}, Full: {sl.isFull()}")
 
 
-    print("--- DYNAMIC LIST TESTING ---")
-    dl = dynamicList() # Initial capacity is 5
+    # print("--- DYNAMIC LIST TESTING ---")
+    # dl = dynamicList() # Initial capacity is 5
 
-    print("\n--- Test 1: Filling to Initial Capacity ---")
-    for i in range(5):
-        dl.append(i * 10)
-    print(f"List: {dl.list.list}")
-    print(f"Capacity: {dl.list.length}, Count: {dl.list.current_count}")
-    # Expected: [0, 10, 20, 30, 40], Cap: 5, Count: 5
+    # print("\n--- Test 1: Filling to Initial Capacity ---")
+    # for i in range(5):
+    #     dl.append(i * 10)
+    # print(f"List: {dl.list.list}")
+    # print(f"Capacity: {dl.list.length}, Count: {dl.list.current_count}")
+    # # Expected: [0, 10, 20, 30, 40], Cap: 5, Count: 5
 
-    print("\n--- Test 2: Triggering Auto-Resize (Doubling) ---")
-    dl.append(50) # This should trigger the resize from 5 to 10
-    print(f"List after 6th element: {dl.list.list}")
-    print(f"New Capacity: {dl.list.length}") 
-    # Expected: [0, 10, 20, 30, 40, 50, None, None, None, None], Cap: 10
+    # print("\n--- Test 2: Triggering Auto-Resize (Doubling) ---")
+    # dl.append(50) # This should trigger the resize from 5 to 10
+    # print(f"List after 6th element: {dl.list.list}")
+    # print(f"New Capacity: {dl.list.length}") 
+    # # Expected: [0, 10, 20, 30, 40, 50, None, None, None, None], Cap: 10
 
-    print("\n--- Test 3: Extend with Multiple Elements ---")
-    dl.extend([60, 70, 80])
-    print(f"List after extend: {dl.list.list}")
-    print(f"Current Count: {dl.list.current_count}")
-    # Expected: [0, 10, 20, 30, 40, 50, 60, 70, 80, None], Count: 9
+    # print("\n--- Test 3: Extend with Multiple Elements ---")
+    # dl.extend([60, 70, 80])
+    # print(f"List after extend: {dl.list.list}")
+    # print(f"Current Count: {dl.list.current_count}")
+    # # Expected: [0, 10, 20, 30, 40, 50, 60, 70, 80, None], Count: 9
 
-    print("\n--- Test 4: Access and Search ---")
-    print(f"Value at index 3: {dl.atIndex(3)}") # Expected: 30
-    print(f"Find index of 70: {dl.find(70)}")   # Expected: 7
-    print(f"Find non-existent: {dl.find(999)}") # Expected: Not found
+    # print("\n--- Test 4: Access and Search ---")
+    # print(f"Value at index 3: {dl.atIndex(3)}") # Expected: 30
+    # print(f"Find index of 70: {dl.find(70)}")   # Expected: 7
+    # print(f"Find non-existent: {dl.find(999)}") # Expected: Not found
 
-    print("\n--- Test 5: Summation ---")
-    # 0+10+20+30+40+50+60+70+80 = 360
-    print(f"Sum of elements: {dl.sum()}") 
+    # print("\n--- Test 5: Summation ---")
+    # # 0+10+20+30+40+50+60+70+80 = 360
+    # print(f"Sum of elements: {dl.sum()}") 
 
-    print("\n--- Test 6: Pop and Delete ---")
-    popped = dl.pop()
-    print(f"Popped value: {popped}") # Expected: 80
-    dl.delete(0) # Remove the 0 at the start
-    print(f"List after delete index 0 & pop: {dl.list.list}")
-    print(f"New Sum: {dl.sum()}") # Expected: 280 (360 - 80 - 0)
+    # print("\n--- Test 6: Pop and Delete ---")
+    # popped = dl.pop()
+    # print(f"Popped value: {popped}") # Expected: 80
+    # dl.delete(0) # Remove the 0 at the start
+    # print(f"List after delete index 0 & pop: {dl.list.list}")
+    # print(f"New Sum: {dl.sum()}") # Expected: 280 (360 - 80 - 0)
+
+    DLL = DoublyLinkedList()
+
+    print("--- Test 1: Empty List Operations ---")
+    DLL.traverse() # Should print nothing or just None
+    DLL.delete_last_node() # Should print: list is empty
+    DLL.delete_at_position(1) # Should print: position not in range
+
+    print("\n--- Test 2: Basic Appends ---")
+    DLL.insert_at_end(DoublyNode(10))
+    DLL.insert_at_end(DoublyNode(20))
+    DLL.insert_at_end(DoublyNode(30))
+    print("Forward: ", end=""); DLL.traverse(); print("None")
+    print("Reverse: ", end=""); DLL.reverseTraverse(); print("None")
+    # Expected Forward: 10 -> 20 -> 30 -> None
+    # Expected Reverse: 30 -> 20 -> 10 -> None
+
+    print("\n--- Test 3: Insert at Boundaries (Start and End) ---")
+    DLL.insert_at_position(1, DoublyNode(5))  # New head
+    DLL.insert_at_position(DLL.size + 1, DoublyNode(40)) # New tail
+    print("After boundary inserts: ", end=""); DLL.traverse(); print("None")
+    # Expected: 5 -> 10 -> 20 -> 30 -> 40 -> None
+
+    print("\n--- Test 4: Insert in Middle ---")
+    DLL.insert_at_position(3, DoublyNode(15)) # Between 10 and 20
+    print("After middle insert: ", end=""); DLL.traverse(); print("None")
+    # Expected: 5 -> 10 -> 15 -> 20 -> 30 -> 40 -> None
+
+    print("\n--- Test 5: Modify and Delete ---")
+    DLL.modify_val_at_position(3, 99) # Change 15 to 99
+    DLL.delete_at_position(1) # Delete head (5)
+    DLL.delete_at_position(DLL.size) # Delete tail (40)
+    print("After modify and deletes: ", end=""); DLL.traverse(); print("None")
+    # Expected: 10 -> 99 -> 20 -> 30 -> None
+
+    print("\n--- Test 6: Final Bidirectional Check ---")
+    print("Final Forward: ", end=""); DLL.traverse(); print("None")
+    print("Final Reverse: ", end=""); DLL.reverseTraverse(); print("None")
