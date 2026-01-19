@@ -7,34 +7,39 @@ class DoublyNode:
 class DoublyLinkedList:
     def __init__(self):
         self.size = 0
-        dummy_node = DoublyNode(None)
-        self.head = dummy_node
-        self.tail = dummy_node
+        self.head = DoublyNode(None)
+        self.tail = DoublyNode(None)
+         
+        self.head.next = self.tail
+        self.tail.prev = self.head
 
     def traverse(self):#O(N)
         cur = self.head.next
-        while cur:
+        while cur!=self.tail:
             print(cur.val,end=" -> ")
             cur = cur.next
     
     def reverseTraverse(self):#O(N)
-        cur = self.tail
+        cur = self.tail.prev
         while cur!=self.head:
             print(cur.val,end=" -> ")
             cur = cur.prev
 
     def insert_at_end(self,node):#O(1)
-        self.tail.next = node
-        node.prev = self.tail
-        self.tail = node
+        last_node = self.tail.prev
+        last_node.next = node
+        node.prev = last_node
+        node.next = self.tail
+        self.tail.prev = node
         self.size+=1
 
     def delete_last_node(self):#O(1)
         if self.size>0:
-            self.tail = self.tail.prev
-            self.tail.next = None
+            new_last_node = self.tail.prev.prev
+            new_last_node.next = self.tail
+            self.tail.prev = new_last_node
             self.size-=1
-        else:
+        else:       
             print("list is empty")
 
     def insert_at_position(self,position,new_node):
@@ -93,16 +98,17 @@ class DoublyLinkedList:
 
 if __name__=="__main__":
     DLL = DoublyLinkedList()
-    # DLL.insert_at_end(DoublyNode(1))
-    # DLL.insert_at_end(DoublyNode(2))
-    # DLL.insert_at_end(DoublyNode(3))
+    DLL.insert_at_end(DoublyNode(1))
+    DLL.insert_at_end(DoublyNode(2))
+    DLL.insert_at_end(DoublyNode(3))
     print(DLL.traverse()) #1 -> 2 -> 3 -> None
     print("size of DLL: ",DLL.size)
     #print(DLL.reverseTraverse())
     # DLL.delete_last_node() #1 -> 2 -> None
     # print(DLL.traverse())
     # print("size of DLL: ",DLL.size)
-    DLL.insert_at_position(DLL.size,DoublyNode(4))
+
+    DLL.insert_at_position(DLL.size+1,DoublyNode(4))
     print(DLL.traverse())
     print("size of DLL: ",DLL.size)
 
