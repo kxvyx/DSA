@@ -3,6 +3,7 @@ from staticlist import StaticList
 from dynamiclist import dynamicList
 from doublylinkedlist import DoublyLinkedList
 from doublylinkedlist import DoublyNode
+from stack import Stack
 if __name__ == "__main__":
     # # Initialize a list of length 3
     # sl = StaticList(3)
@@ -73,40 +74,67 @@ if __name__ == "__main__":
     # print(f"List after delete index 0 & pop: {dl.list.list}")
     # print(f"New Sum: {dl.sum()}") # Expected: 280 (360 - 80 - 0)
 
-    DLL = DoublyLinkedList()
+    # DLL = DoublyLinkedList()
 
-    print("--- Test 1: Empty List Operations ---")
-    DLL.traverse() # Should print nothing or just None
-    DLL.delete_last_node() # Should print: list is empty
-    DLL.delete_at_position(1) # Should print: position not in range
+    # print("--- Test 1: Empty List Operations ---")
+    # DLL.traverse() # Should print nothing or just None
+    # DLL.delete_last_node() # Should print: list is empty
+    # DLL.delete_at_position(1) # Should print: position not in range
 
-    print("\n--- Test 2: Basic Appends ---")
-    DLL.insert_at_end(DoublyNode(10))
-    DLL.insert_at_end(DoublyNode(20))
-    DLL.insert_at_end(DoublyNode(30))
-    print("Forward: ", end=""); DLL.traverse(); print("None")
-    print("Reverse: ", end=""); DLL.reverseTraverse(); print("None")
-    # Expected Forward: 10 -> 20 -> 30 -> None
-    # Expected Reverse: 30 -> 20 -> 10 -> None
+    # print("\n--- Test 2: Basic Appends ---")
+    # DLL.insert_at_end(DoublyNode(10))
+    # DLL.insert_at_end(DoublyNode(20))
+    # DLL.insert_at_end(DoublyNode(30))
+    # print("Forward: ", end=""); DLL.traverse(); print("None")
+    # print("Reverse: ", end=""); DLL.reverseTraverse(); print("None")
+    # # Expected Forward: 10 -> 20 -> 30 -> None
+    # # Expected Reverse: 30 -> 20 -> 10 -> None
 
-    print("\n--- Test 3: Insert at Boundaries (Start and End) ---")
-    DLL.insert_at_position(1, DoublyNode(5))  # New head
-    DLL.insert_at_position(DLL.size + 1, DoublyNode(40)) # New tail
-    print("After boundary inserts: ", end=""); DLL.traverse(); print("None")
-    # Expected: 5 -> 10 -> 20 -> 30 -> 40 -> None
+    # print("\n--- Test 3: Insert at Boundaries (Start and End) ---")
+    # DLL.insert_at_position(1, DoublyNode(5))  # New head
+    # DLL.insert_at_position(DLL.size + 1, DoublyNode(40)) # New tail
+    # print("After boundary inserts: ", end=""); DLL.traverse(); print("None")
+    # # Expected: 5 -> 10 -> 20 -> 30 -> 40 -> None
 
-    print("\n--- Test 4: Insert in Middle ---")
-    DLL.insert_at_position(3, DoublyNode(15)) # Between 10 and 20
-    print("After middle insert: ", end=""); DLL.traverse(); print("None")
-    # Expected: 5 -> 10 -> 15 -> 20 -> 30 -> 40 -> None
+    # print("\n--- Test 4: Insert in Middle ---")
+    # DLL.insert_at_position(3, DoublyNode(15)) # Between 10 and 20
+    # print("After middle insert: ", end=""); DLL.traverse(); print("None")
+    # # Expected: 5 -> 10 -> 15 -> 20 -> 30 -> 40 -> None
 
-    print("\n--- Test 5: Modify and Delete ---")
-    DLL.modify_val_at_position(3, 99) # Change 15 to 99
-    DLL.delete_at_position(1) # Delete head (5)
-    DLL.delete_at_position(DLL.size) # Delete tail (40)
-    print("After modify and deletes: ", end=""); DLL.traverse(); print("None")
-    # Expected: 10 -> 99 -> 20 -> 30 -> None
+    # print("\n--- Test 5: Modify and Delete ---")
+    # DLL.modify_val_at_position(3, 99) # Change 15 to 99
+    # DLL.delete_at_position(1) # Delete head (5)
+    # DLL.delete_at_position(DLL.size) # Delete tail (40)
+    # print("After modify and deletes: ", end=""); DLL.traverse(); print("None")
+    # # Expected: 10 -> 99 -> 20 -> 30 -> None
 
-    print("\n--- Test 6: Final Bidirectional Check ---")
-    print("Final Forward: ", end=""); DLL.traverse(); print("None")
-    print("Final Reverse: ", end=""); DLL.reverseTraverse(); print("None")
+    # print("\n--- Test 6: Final Bidirectional Check ---")
+    # print("Final Forward: ", end=""); DLL.traverse(); print("None")
+    # print("Final Reverse: ", end=""); DLL.reverseTraverse(); print("None")
+
+    stack = Stack()
+
+    # 1. Test Empty Stack
+    print("Testing Empty Pop:", stack.pop()) # Should be None
+    print("Is Empty?", stack.isEmpty())     # Should be True
+
+    # 2. Test Sequential Pushes
+    for i in range(1, 6):
+        stack.push(i * 10)
+    print("Stack after 5 pushes:", end=" ")
+    stack.display() # Expected: 10 20 30 40 50
+    print("Size:", stack.size) # Expected: 5
+
+    # 3. Test Peek (Peak)
+    print("Current Peak:", stack.peak()) # Expected: 50
+
+    # 4. Test Multi-Pop
+    print("Popped:", stack.pop()) # 50
+    print("Popped:", stack.pop()) # 40
+    print("Size now:", stack.size) # Expected: 3
+    print("New Peak:", stack.peak()) # Expected: 30
+
+    # 5. Clear the stack
+    while not stack.isEmpty():
+        stack.pop()
+    print("Size after clearing:", stack.size) # Expected: 0
