@@ -6,7 +6,9 @@ class Stack:
         self.size = 0
 
     def display(self):
-        self.list.display()
+        for i in range(self.size-1,-1,-1):
+            print(self.list.atIndex(i),end=" ")
+        print()
 
     def isEmpty(self):
         return self.size==0
