@@ -4,6 +4,7 @@ from dynamiclist import dynamicList
 from doublylinkedlist import DoublyLinkedList
 from doublylinkedlist import DoublyNode
 from stack import Stack
+from queue import Queue
 if __name__ == "__main__":
     # # Initialize a list of length 3
     # sl = StaticList(3)
@@ -112,29 +113,68 @@ if __name__ == "__main__":
     # print("Final Forward: ", end=""); DLL.traverse(); print("None")
     # print("Final Reverse: ", end=""); DLL.reverseTraverse(); print("None")
 
-    stack = Stack()
+    # stack = Stack()
 
-    # 1. Test Empty Stack
-    print("Testing Empty Pop:", stack.pop()) # Should be None
-    print("Is Empty?", stack.isEmpty())     # Should be True
+    # # 1. Test Empty Stack
+    # print("Testing Empty Pop:", stack.pop()) # Should be None
+    # print("Is Empty?", stack.isEmpty())     # Should be True
 
-    # 2. Test Sequential Pushes
-    for i in range(1, 6):
-        stack.push(i * 10)
-    print("Stack after 5 pushes:", end=" ")
-    stack.display() # Expected: 10 20 30 40 50
-    print("Size:", stack.size) # Expected: 5
+    # # 2. Test Sequential Pushes
+    # for i in range(1, 6):
+    #     stack.push(i * 10)
+    # print("Stack after 5 pushes:", end=" ")
+    # stack.display() # Expected: 10 20 30 40 50
+    # print("Size:", stack.size) # Expected: 5
 
-    # 3. Test Peek (Peak)
-    print("Current Peak:", stack.peak()) # Expected: 50
+    # # 3. Test Peek (Peak)
+    # print("Current Peak:", stack.peak()) # Expected: 50
 
-    # 4. Test Multi-Pop
-    print("Popped:", stack.pop()) # 50
-    print("Popped:", stack.pop()) # 40
-    print("Size now:", stack.size) # Expected: 3
-    print("New Peak:", stack.peak()) # Expected: 30
+    # # 4. Test Multi-Pop
+    # print("Popped:", stack.pop()) # 50
+    # print("Popped:", stack.pop()) # 40
+    # print("Size now:", stack.size) # Expected: 3
+    # print("New Peak:", stack.peak()) # Expected: 30
 
-    # 5. Clear the stack
-    while not stack.isEmpty():
-        stack.pop()
-    print("Size after clearing:", stack.size) # Expected: 0
+    # # 5. Clear the stack
+    # while not stack.isEmpty():
+    #     stack.pop()
+    # print("Size after clearing:", stack.size) # Expected: 0
+
+    q = Queue()
+
+    # --- Test 1: Empty Queue Behavior ---
+    print("--- Test 1: Initial State ---")
+    print(f"Is empty? {q.isEmpty()}")      # Expected: True
+    print(f"Peek on empty: {q.peek()}")    # Expected: Message + None
+    print(f"Dequeue on empty: {q.dequeue()}") # Expected: Message + None
+
+    # --- Test 2: Enqueue Operations ---
+    print("\n--- Test 2: Enqueueing Elements ---")
+    for item in ["Apple", "Banana", "Cherry"]:
+        q.enqueue(item)
+        print(f"Enqueued: {item}")
+    
+    print("Current Queue: ", end="")
+    print(q.display())                            # Expected: Apple -> Banana -> Cherry ->
+    print(f"Size: {q.size}")               # Expected: 3
+
+    # --- Test 3: Peek and Dequeue (FIFO Logic) ---
+    print("\n--- Test 3: Dequeueing (FIFO) ---")
+    print(f"Front item (Peek): {q.peek()}")# Expected: Apple
+    
+    removed = q.dequeue()
+    print(f"Removed element: {removed}")   # Expected: Apple
+    print("Queue after dequeue: ", end="")
+    print(q.display())                            # Expected: Banana -> Cherry ->
+    print(f"New Size: {q.size}")           # Expected: 2
+
+    # --- Test 4: Drain to Empty and Re-fill ---
+    print("\n--- Test 4: Emptying and Refilling ---")
+    q.dequeue() # Removes Banana
+    q.dequeue() # Removes Cherry
+    print(f"Is empty after draining? {q.isEmpty()}") # Expected: True
+    
+    q.enqueue("Date")
+    print("Queue after refill: ", end="")
+    print(q.display())                            # Expected: Date ->
+    print(f"Peek: {q.peek()}")             # Expected: Date
