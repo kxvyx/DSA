@@ -28,14 +28,12 @@ class DoublyLinkedList:
     def get_last_node_val(self):#O(1)
         return self.tail.prev.val
     
-    def get_val_at_position(self,position):
+    def get_val_at_position(self,position):#O(N)
         try:
             if position<=0 or position>self.size:
                 raise ValueError("position not in range")
-            elif position==1:
-                return self.head.next.val
-            elif position==self.size:
-                return self.get_last_node_val()
+            elif position==self.size: 
+                return self.get_last_node_val() #O(1)
             else:
                 cur = self.head
                 for i in range(position):
