@@ -16,10 +16,24 @@ class LinkedList:
             current = current.next
 
     def get_last_node(self): #O(N)
+        cur = self.head
+        while cur.next:
+            cur = cur.next
+        return cur
+    
+    def get_val_at_position(self,position):
+        try:
+            if 0>=position or position>self.size:
+                raise ValueError("position not in range")
             cur = self.head
-            while cur.next:
+            for i in range(position):
                 cur = cur.next
-            return cur
+            return cur.val
+        except ValueError as e:
+            print(e)
+        except Exception as e:
+            print("something went wrong ",e)
+
     
     def insert_at_end(self,node): #O(N)
         last_node = self.get_last_node()
@@ -74,22 +88,22 @@ class LinkedList:
 
 
     def delete_at_position(self,position):
-            try:
-                if self.size == 0:
-                    print("list is empty")
-                    return
-                if position<1 or position>self.size:
-                    raise ValueError("position not in range")
-            
-                cur = self.head
-                for i in range(position-1):
-                    cur = cur.next
-                cur.next = cur.next.next
-                self.size-=1
-            except ValueError as e:
-                print(e)  
-            except Exception as e:
-                print("something went wrong:", e)
+        try:
+            if self.size == 0:
+                print("list is empty")
+                return
+            if position<1 or position>self.size:
+                raise ValueError("position not in range")
+        
+            cur = self.head
+            for i in range(position-1):
+                cur = cur.next
+            cur.next = cur.next.next
+            self.size-=1
+        except ValueError as e:
+            print(e)  
+        except Exception as e:
+            print("something went wrong:", e)
 
 
 if __name__=="__main__":
@@ -130,3 +144,5 @@ if __name__=="__main__":
 
     LL.modify_val_at_position(1,98)
     print(LL.traverse())
+
+    # print(LL.get_val_at_position(4))

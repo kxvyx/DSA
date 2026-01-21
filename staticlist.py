@@ -38,8 +38,11 @@ class StaticList:
             print("Something went wrong :/")
             
     def pop(self):
-        last_element = self.list[self.current_count-1]
-        self.delete(self.current_count-1)
+        last_idx = self.length-1
+        while self.list[last_idx] is None:
+            last_idx -= 1
+        last_element = self.list[last_idx]
+        self.delete(last_idx)
         return last_element
     
     def atIndex(self,index):
@@ -62,8 +65,9 @@ if __name__=="__main__":
     print(sl.list) #[0, 1, 2]
     print(sl.pop()) #2
     print(sl.list) #[0, 1, None]
-    print(sl.atIndex(2)) #None
-    # print(sl.list)
+    print(sl.pop())
+    #print(sl.atIndex(2)) #None
+    print(sl.list)
     # print(sl.current_count)
     
 
