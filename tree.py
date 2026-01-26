@@ -9,39 +9,33 @@ class BinaryTree:
     def __init__(self,root=None):
         self.root = root
 
-    def preorder(self):
-        def dfs(node):
-            if not node:
-                return
-            tree.append(node.val)
-            dfs(node.left)
-            dfs(node.right)
-        tree = []
-        dfs(self.root)
-        return tree
+    def preorder(self,root,tree_order=None):
+        if tree_order is None:
+            tree_order = []
+        if root:
+            tree_order.append(root.val)
+            self.preorder(root.left, tree_order)
+            self.preorder(root.right, tree_order)
+        return tree_order
+
+    def inorder(self,root,tree_order=None):
+        if tree_order is None:
+            tree_order = []
+        if root:
+            self.inorder(root.left, tree_order)
+            tree_order.append(root.val)
+            self.inorder(root.right, tree_order)
+        return tree_order
 
 
-    def inorder(self):
-        def dfs(node):
-            if not node:
-                return
-            dfs(node.left)
-            tree.append(node.val)
-            dfs(node.right)
-        tree = []
-        dfs(self.root)
-        return tree
-
-    def postorder(self):
-        def dfs(node):
-            if not node:
-                return
-            dfs(node.left)
-            dfs(node.right)
-            tree.append(node.val)
-        tree = []
-        dfs(self.root)
-        return tree
+    def postorder(self,root,tree_order=None):
+        if tree_order is None:
+            tree_order = []
+        if root:
+            self.postorder(root.left, tree_order)
+            self.postorder(root.right, tree_order)
+            tree_order.append(root.val)
+        return tree_order
 
     def recursive_insert(self,new_node,current_node):
         if new_node.val < current_node.val:
@@ -64,8 +58,15 @@ class BinaryTree:
     def delete_node():
         pass
 
-    def search(self,val): 
-        pass
+    def search(self,val,current_node): 
+        if current_node is None:
+            return "Not found"
+        if val == current_node.val:
+            return "Found"
+        if val < current_node.val:
+            return self.search(val,current_node.left)
+        else: 
+            return self.search(val,current_node.right)
 
 if __name__=="__main__":
     BST = BinaryTree()
@@ -73,8 +74,11 @@ if __name__=="__main__":
     BST.insert_node(TreeNode(5))
     BST.insert_node(TreeNode(15))
     BST.insert_node(TreeNode(3))
-    print(BST.inorder())
-    print(BST.preorder())
-    print(BST.postorder())
+    print(BST.inorder(BST.root))
+    print(BST.preorder(BST.root))
+    print(BST.postorder(BST.root))
+    print(BST.search(15,BST.root))
+    print(BST.search(78,BST.root))
+
 
 
