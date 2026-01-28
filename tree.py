@@ -55,8 +55,28 @@ class BinaryTree:
         else:
             self.recursive_insert(new_node,self.root)
         
-    def delete_node():
-        pass
+    def delete_node(self,val,current_node):
+        if not current_node:
+            return None
+        if val < current_node.val:
+            if current_node.left:
+                current_node.left = self.delete_node(val,current_node.left)
+        elif val > current_node.val:
+            if current_node.right:
+                current_node.right = self.delete_node(val,current_node.right)
+        else: #found node to delete
+            if current_node.left is None:#one child
+                return current_node.right
+            if current_node.right is None:
+                return current_node.left
+            cur = current_node.left #else 2 child
+            while cur.right:
+                cur = cur.right
+            current_node.val = cur.val #replace val
+            current_node.left = self.delete_node(cur.val , current_node.left)
+
+        return current_node
+
 
     def search(self,val,current_node): 
         if current_node is None:
@@ -74,11 +94,14 @@ if __name__=="__main__":
     BST.insert_node(TreeNode(5))
     BST.insert_node(TreeNode(15))
     BST.insert_node(TreeNode(3))
-    print(BST.inorder(BST.root))
+    #print(BST.inorder(BST.root))
     print(BST.preorder(BST.root))
-    print(BST.postorder(BST.root))
+    #print(BST.postorder(BST.root))
     print(BST.search(15,BST.root))
     print(BST.search(78,BST.root))
+    BST.delete_node(10,BST.root)
+    print(BST.preorder(BST.root))
+
 
 
 
