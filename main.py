@@ -5,6 +5,7 @@ from doublylinkedlist import DoublyLinkedList
 from doublylinkedlist import DoublyNode
 from stack import Stack
 from queue import Queue
+from tree import TreeNode, BinaryTree
 if __name__ == "__main__":
     # # Initialize a list of length 3
     # sl = StaticList(3)
@@ -140,41 +141,79 @@ if __name__ == "__main__":
     #     stack.pop()
     # print("Size after clearing:", stack.size) # Expected: 0
 
-    q = Queue()
+    # q = Queue()
 
-    # --- Test 1: Empty Queue Behavior ---
-    print("--- Test 1: Initial State ---")
-    print(f"Is empty? {q.isEmpty()}")      # Expected: True
-    print(f"Peek on empty: {q.peek()}")    # Expected: Message + None
-    print(f"Dequeue on empty: {q.dequeue()}") # Expected: Message + None
+    # # --- Test 1: Empty Queue Behavior ---
+    # print("--- Test 1: Initial State ---")
+    # print(f"Is empty? {q.isEmpty()}")      # Expected: True
+    # print(f"Peek on empty: {q.peek()}")    # Expected: Message + None
+    # print(f"Dequeue on empty: {q.dequeue()}") # Expected: Message + None
 
-    # --- Test 2: Enqueue Operations ---
-    print("\n--- Test 2: Enqueueing Elements ---")
-    for item in ["Apple", "Banana", "Cherry"]:
-        q.enqueue(item)
-        print(f"Enqueued: {item}")
+    # # --- Test 2: Enqueue Operations ---
+    # print("\n--- Test 2: Enqueueing Elements ---")
+    # for item in ["Apple", "Banana", "Cherry"]:
+    #     q.enqueue(item)
+    #     print(f"Enqueued: {item}")
     
-    print("Current Queue: ", end="")
-    print(q.display())                            # Expected: Apple -> Banana -> Cherry ->
-    print(f"Size: {q.size}")               # Expected: 3
+    # print("Current Queue: ", end="")
+    # print(q.display())                            # Expected: Apple -> Banana -> Cherry ->
+    # print(f"Size: {q.size}")               # Expected: 3
 
-    # --- Test 3: Peek and Dequeue (FIFO Logic) ---
-    print("\n--- Test 3: Dequeueing (FIFO) ---")
-    print(f"Front item (Peek): {q.peek()}")# Expected: Apple
+    # # --- Test 3: Peek and Dequeue (FIFO Logic) ---
+    # print("\n--- Test 3: Dequeueing (FIFO) ---")
+    # print(f"Front item (Peek): {q.peek()}")# Expected: Apple
     
-    removed = q.dequeue()
-    print(f"Removed element: {removed}")   # Expected: Apple
-    print("Queue after dequeue: ", end="")
-    print(q.display())                            # Expected: Banana -> Cherry ->
-    print(f"New Size: {q.size}")           # Expected: 2
+    # removed = q.dequeue()
+    # print(f"Removed element: {removed}")   # Expected: Apple
+    # print("Queue after dequeue: ", end="")
+    # print(q.display())                            # Expected: Banana -> Cherry ->
+    # print(f"New Size: {q.size}")           # Expected: 2
 
-    # --- Test 4: Drain to Empty and Re-fill ---
-    print("\n--- Test 4: Emptying and Refilling ---")
-    q.dequeue() # Removes Banana
-    q.dequeue() # Removes Cherry
-    print(f"Is empty after draining? {q.isEmpty()}") # Expected: True
+    # # --- Test 4: Drain to Empty and Re-fill ---
+    # print("\n--- Test 4: Emptying and Refilling ---")
+    # q.dequeue() # Removes Banana
+    # q.dequeue() # Removes Cherry
+    # print(f"Is empty after draining? {q.isEmpty()}") # Expected: True
     
-    q.enqueue("Date")
-    print("Queue after refill: ", end="")
-    print(q.display())                            # Expected: Date ->
-    print(f"Peek: {q.peek()}")             # Expected: Date
+    # q.enqueue("Date")
+    # print("Queue after refill: ", end="")
+    # print(q.display())                            # Expected: Date ->
+    # print(f"Peek: {q.peek()}")             # Expected: Date
+
+    BST = BinaryTree()
+    for val in [10, 5, 15, 3, 7, 12, 18]:
+        BST.insert_node(TreeNode(val))
+
+    print("Original Tree (Inorder - should be sorted):", BST.inorder(BST.root))
+    print("Original Tree (Preorder):", BST.preorder(BST.root))
+    print("-" * 30)
+
+    # TEST CASE 1: Delete a Leaf Node (e.g., 18)
+    # Descent: 10 -> 15 -> 18. Ascent: 18 returns None to 15.
+    print("Deleting leaf node 18...")
+    BST.delete_node(18, BST.root)
+    print("After deleting 18 (Inorder):", BST.inorder(BST.root))
+    print("-" * 30)
+
+    # TEST CASE 2: Delete a Node with One Child (e.g., 3)
+    # If we add a child to 3 first
+    BST.insert_node(TreeNode(2)) 
+    print("Deleting node 3 (which now has child 2)...")
+    # Descent: 10 -> 5 -> 3. Ascent: 3 returns its left child (2) to node 5.
+    BST.delete_node(3, BST.root)
+    print("After deleting 3 (Inorder):", BST.inorder(BST.root))
+    print("-" * 30)
+
+    # TEST CASE 3: Delete the Root Node with Two Children (10)
+    # Descent: Finds 10. Find Predecessor: 7. 
+    # Swap: Root becomes 7. Cleanup: Delete duplicate 7 from left branch.
+    print("Deleting root node 10...")
+    # Capture the return value in case the root object itself changes
+    BST.root = BST.delete_node(10, BST.root) 
+    print("After deleting root 10 (Inorder):", BST.inorder(BST.root))
+    print("New Preorder (Root should be 7):", BST.preorder(BST.root))
+    print("-" * 30)
+
+    # TEST CASE 4: Search verification
+    print("Searching for deleted 10:", BST.search(10, BST.root))
+    print("Searching for existing 7:", BST.search(7, BST.root))
