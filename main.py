@@ -7,6 +7,7 @@ from stack import Stack
 from queue import Queue
 from tree import TreeNode, BinaryTree
 from graph import Graph
+from heap import MinHeap
 if __name__ == "__main__":
     # # Initialize a list of length 3
     # sl = StaticList(3)
@@ -219,47 +220,87 @@ if __name__ == "__main__":
     # print("Searching for deleted 10:", BST.search(10, BST.root))
     # print("Searching for existing 7:", BST.search(7, BST.root))
 
-    g = Graph()
+    # g = Graph()
 
-    # --- Test 1: Adding Nodes ---
-    print("Testing add_node...")
-    g.add_node("A")
-    g.add_node("B")
-    g.add_node("C")
-    g.add_node("A")  # Should print "Node already exists"
+    # # --- Test 1: Adding Nodes ---
+    # print("Testing add_node...")
+    # g.add_node("A")
+    # g.add_node("B")
+    # g.add_node("C")
+    # g.add_node("A")  # Should print "Node already exists"
     
-    # --- Test 2: Adding Edges ---
-    print("\nTesting add_edge...")
-    g.add_edge("A", "B")
-    g.add_edge("B", "C")
-    g.add_edge("A", "Z")  # Should print "Both nodes should exist"
+    # # --- Test 2: Adding Edges ---
+    # print("\nTesting add_edge...")
+    # g.add_edge("A", "B")
+    # g.add_edge("B", "C")
+    # g.add_edge("A", "Z")  # Should print "Both nodes should exist"
     
-    # --- Test 3: Traversal / Visualization ---
-    print("\nInitial Graph State:")
-    g.traverse()
+    # # --- Test 3: Traversal / Visualization ---
+    # print("\nInitial Graph State:")
+    # g.traverse()
 
-    # --- Test 4: Check Existence ---
-    print("\nTesting has_edge...")
-    print(f"Edge A-B exists? {g.has_edge('A', 'B')}") # True
-    print(f"Edge A-C exists? {g.has_edge('A', 'C')}") # False
+    # # --- Test 4: Check Existence ---
+    # print("\nTesting has_edge...")
+    # print(f"Edge A-B exists? {g.has_edge('A', 'B')}") # True
+    # print(f"Edge A-C exists? {g.has_edge('A', 'C')}") # False
 
-    # --- Test 5: Neighbors ---
-    print("\nTesting get_neighbors...")
-    print(f"Neighbors of B: {g.get_neighbors('B')}") # ['A', 'C']
+    # # --- Test 5: Neighbors ---
+    # print("\nTesting get_neighbors...")
+    # print(f"Neighbors of B: {g.get_neighbors('B')}") # ['A', 'C']
 
-    # --- Test 6: Remove Edge ---
-    print("\nTesting remove_edge...")
-    g.remove_edge("A", "B")
-    print("Graph after removing edge A-B:")
-    g.traverse()
+    # # --- Test 6: Remove Edge ---
+    # print("\nTesting remove_edge...")
+    # g.remove_edge("A", "B")
+    # print("Graph after removing edge A-B:")
+    # g.traverse()
 
-    # --- Test 7: Remove Node ---
-    print("\nTesting remove_node...")
-    g.remove_node("B")
-    print("Graph after removing node B (should also clean up edges):")
-    g.traverse()
+    # # --- Test 7: Remove Node ---
+    # print("\nTesting remove_node...")
+    # g.remove_node("B")
+    # print("Graph after removing node B (should also clean up edges):")
+    # g.traverse()
 
-    # --- Test 8: Empty Graph ---
-    print("\nTesting empty state...")
-    empty_g = Graph()
-    empty_g.traverse() # Should print "Graph is empty"
+    # # --- Test 8: Empty Graph ---
+    # print("\nTesting empty state...")
+    # empty_g = Graph()
+    # empty_g.traverse() # Should print "Graph is empty"
+
+    h = MinHeap()
+
+    print("--- Test 1: Basic Push & Pop ---")
+    h.push(10)
+    h.push(5)
+    h.push(15)
+    print(f"Popped: {h.pop()} (Expected: 5)")
+    print(f"Heap state: {h.heap} (Size: {h.size})")
+
+    print("\n--- Test 2: The 'Size 1' Edge Case ---")
+    # Heap currently has [10, 15]
+    h.pop() # Pops 10
+    last = h.pop() # Pops 15 - This used to crash!
+    print(f"Popped last element: {last} (Expected: 15)")
+    print(f"Heap state: {h.heap} (Size: {h.size})")
+
+    print("\n--- Test 3: Duplicates ---")
+    for x in [5, 2, 5, 1]:
+        h.push(x)
+    results = []
+    while h.size > 0:
+        results.append(h.pop())
+    print(f"Sorted sequence: {results} (Expected: [1, 2, 5, 5])")
+
+    print("\n--- Test 4: Reverse Sorted Input (Stress Test) ---")
+    for i in range(10, 0, -1):
+        h.push(i)
+    
+    correct_order = True
+    prev = h.pop()
+    for _ in range(9):
+        curr = h.pop()
+        if curr < prev:
+            correct_order = False
+        prev = curr
+    print(f"Large reverse set sorted correctly? {correct_order}")
+
+    print("\n--- Test 5: Empty Heap Handling ---")
+    h.pop() # Should print 'Heap empty'
